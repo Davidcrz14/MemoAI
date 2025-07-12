@@ -96,10 +96,10 @@ MemoAI/
 
 ```bash
 # Clonar el repositorio
-git clone [repository-url]
+git clone [https://github.com/Davidcrz14/MemoAI.git]
 
 # Navegar al directorio
-cd Mail
+cd MemoAI
 
 # Restaurar dependencias
 dotnet restore
