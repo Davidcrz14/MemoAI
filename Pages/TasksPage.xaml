@@ -1,0 +1,322 @@
+<Page x:Class="MemoAI.Pages.TasksPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="TasksPage"
+      Background="{StaticResource BackgroundColor}">
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource SurfaceColor}"
+               BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1"
+               Padding="32,24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="📋" FontSize="24" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Gestión de Tareas" FontSize="24" FontWeight="SemiBold"
+                              Foreground="{StaticResource TextPrimary}" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Border Background="{StaticResource PrimaryBlue}" CornerRadius="8"
+                           Padding="16,8" Margin="0,0,12,0" Cursor="Hand"
+                           MouseLeftButtonUp="AddTask_Click">
+                        <TextBlock Text="+ Nueva Tarea" FontSize="14" FontWeight="Medium"
+                                  Foreground="White"/>
+                    </Border>
+                    <Border Background="Transparent" BorderBrush="{StaticResource BorderColor}"
+                           BorderThickness="1" CornerRadius="8" Padding="16,8" Cursor="Hand"
+                           >
+                        <TextBlock Text="← Volver" FontSize="14" FontWeight="Medium"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+                    <Border Background="Transparent" BorderBrush="{StaticResource BorderColor}"
+                           BorderThickness="1" CornerRadius="8" Padding="16,8" Cursor="Hand">
+                        <TextBlock Text="← Volver" FontSize="14" FontWeight="Medium"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar izquierdo - Filtros -->
+            <Border Grid.Column="0" Background="{StaticResource SidebarColor}"
+                   BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,1,0">
+                <StackPanel Margin="24,32,24,24">
+                    <TextBlock Text="FILTROS" FontSize="12" FontWeight="Medium"
+                              Foreground="{StaticResource TextTertiary}" Margin="0,0,0,16"/>
+
+                    <Border Background="{StaticResource PrimaryBlue}" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <TextBlock Text="Todas las tareas" FontSize="14" FontWeight="Medium"
+                                  Foreground="White"/>
+                    </Border>
+
+                    <Border Background="Transparent" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <TextBlock Text="Pendientes" FontSize="14"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+
+                    <Border Background="Transparent" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <TextBlock Text="En progreso" FontSize="14"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+
+                    <Border Background="Transparent" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,32" Cursor="Hand">
+                        <TextBlock Text="Completadas" FontSize="14"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+
+                    <TextBlock Text="PRIORIDAD" FontSize="12" FontWeight="Medium"
+                              Foreground="{StaticResource TextTertiary}" Margin="0,0,0,16"/>
+
+                    <Border Background="Transparent" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8" Height="8" Fill="{StaticResource RedTag}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Alta" FontSize="14"
+                                      Foreground="{StaticResource TextPrimary}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="Transparent" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8" Height="8" Fill="{StaticResource OrangeTag}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Media" FontSize="14"
+                                      Foreground="{StaticResource TextPrimary}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="Transparent" CornerRadius="8"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8" Height="8" Fill="{StaticResource GreenTag}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Baja" FontSize="14"
+                                      Foreground="{StaticResource TextPrimary}"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Panel central - Lista de tareas -->
+            <Border Grid.Column="1" Background="{StaticResource SurfaceColor}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="32,32,32,24">
+                        <!-- Tarea 1 -->
+                        <Border Background="{StaticResource SurfaceColor}"
+                               BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                               CornerRadius="12" Padding="24,20" Margin="0,0,0,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBox Grid.Column="0" VerticalAlignment="Top" Margin="0,4,16,0"/>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Revisar propuesta de cliente" FontSize="16" FontWeight="Medium"
+                                              Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Analizar los requerimientos del nuevo proyecto y preparar respuesta"
+                                              FontSize="14" Foreground="{StaticResource TextSecondary}"
+                                              TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Background="{StaticResource RedTag}" CornerRadius="12"
+                                               Padding="8,4" Margin="0,0,8,0">
+                                            <TextBlock Text="Alta" FontSize="11" FontWeight="Medium"
+                                                      Foreground="White"/>
+                                        </Border>
+                                        <TextBlock Text="Vence: Hoy" FontSize="12"
+                                                  Foreground="{StaticResource TextTertiary}"
+                                                  VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <Border Grid.Column="2" Background="Transparent"
+                                       CornerRadius="6" Padding="8" Cursor="Hand">
+                                    <TextBlock Text="⋯" FontSize="16" FontWeight="Bold"
+                                              Foreground="{StaticResource TextTertiary}"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Tarea 2 -->
+                        <Border Background="{StaticResource SurfaceColor}"
+                               BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                               CornerRadius="12" Padding="24,20" Margin="0,0,0,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBox Grid.Column="0" VerticalAlignment="Top" Margin="0,4,16,0"/>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Actualizar documentación del proyecto" FontSize="16" FontWeight="Medium"
+                                              Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Incluir las nuevas funcionalidades implementadas esta semana"
+                                              FontSize="14" Foreground="{StaticResource TextSecondary}"
+                                              TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Background="{StaticResource OrangeTag}" CornerRadius="12"
+                                               Padding="8,4" Margin="0,0,8,0">
+                                            <TextBlock Text="Media" FontSize="11" FontWeight="Medium"
+                                                      Foreground="White"/>
+                                        </Border>
+                                        <TextBlock Text="Vence: Mañana" FontSize="12"
+                                                  Foreground="{StaticResource TextTertiary}"
+                                                  VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <Border Grid.Column="2" Background="Transparent"
+                                       CornerRadius="6" Padding="8" Cursor="Hand">
+                                    <TextBlock Text="⋯" FontSize="16" FontWeight="Bold"
+                                              Foreground="{StaticResource TextTertiary}"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Tarea 3 -->
+                        <Border Background="{StaticResource SurfaceColor}"
+                               BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                               CornerRadius="12" Padding="24,20" Margin="0,0,0,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBox Grid.Column="0" VerticalAlignment="Top" Margin="0,4,16,0" IsChecked="True"/>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Reunión de equipo semanal" FontSize="16" FontWeight="Medium"
+                                              Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"
+                                              TextDecorations="Strikethrough"/>
+                                    <TextBlock Text="Revisar el progreso del sprint y planificar próximas tareas"
+                                              FontSize="14" Foreground="{StaticResource TextTertiary}"
+                                              TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Background="{StaticResource GreenTag}" CornerRadius="12"
+                                               Padding="8,4" Margin="0,0,8,0">
+                                            <TextBlock Text="Completada" FontSize="11" FontWeight="Medium"
+                                                      Foreground="White"/>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <Border Grid.Column="2" Background="Transparent"
+                                       CornerRadius="6" Padding="8" Cursor="Hand">
+                                    <TextBlock Text="⋯" FontSize="16" FontWeight="Bold"
+                                              Foreground="{StaticResource TextTertiary}"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Panel derecho - Detalles -->
+            <Border Grid.Column="2" Background="{StaticResource SidebarColor}"
+                   BorderBrush="{StaticResource BorderColor}" BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="24,32,24,24">
+                        <TextBlock Text="Estadísticas" FontSize="18" FontWeight="Medium"
+                                  Foreground="{StaticResource TextPrimary}" Margin="0,0,0,24"/>
+
+                        <!-- Estadística 1 -->
+                        <Border Background="{StaticResource SurfaceColor}" CornerRadius="12"
+                               Padding="20,16" Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock Text="12" FontSize="32" FontWeight="Bold"
+                                          Foreground="{StaticResource PrimaryBlue}"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Text="Tareas Pendientes" FontSize="14"
+                                          Foreground="{StaticResource TextSecondary}"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Estadística 2 -->
+                        <Border Background="{StaticResource SurfaceColor}" CornerRadius="12"
+                               Padding="20,16" Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock Text="8" FontSize="32" FontWeight="Bold"
+                                          Foreground="{StaticResource GreenTag}"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Text="Completadas Hoy" FontSize="14"
+                                          Foreground="{StaticResource TextSecondary}"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Estadística 3 -->
+                        <Border Background="{StaticResource SurfaceColor}" CornerRadius="12"
+                               Padding="20,16" Margin="0,0,0,32">
+                            <StackPanel>
+                                <TextBlock Text="75%" FontSize="32" FontWeight="Bold"
+                                          Foreground="{StaticResource OrangeTag}"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Text="Productividad" FontSize="14"
+                                          Foreground="{StaticResource TextSecondary}"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="Próximas Fechas" FontSize="16" FontWeight="Medium"
+                                  Foreground="{StaticResource TextPrimary}" Margin="0,0,0,16"/>
+
+                        <!-- Próxima fecha 1 -->
+                        <Border Background="{StaticResource SurfaceColor}" CornerRadius="8"
+                               Padding="16,12" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="Presentación cliente" FontSize="14" FontWeight="Medium"
+                                          Foreground="{StaticResource TextPrimary}"/>
+                                <TextBlock Text="Mañana 10:00 AM" FontSize="12"
+                                          Foreground="{StaticResource TextSecondary}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Próxima fecha 2 -->
+                        <Border Background="{StaticResource SurfaceColor}" CornerRadius="8"
+                               Padding="16,12" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="Entrega final" FontSize="14" FontWeight="Medium"
+                                          Foreground="{StaticResource TextPrimary}"/>
+                                <TextBlock Text="Viernes 5:00 PM" FontSize="12"
+                                          Foreground="{StaticResource TextSecondary}"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

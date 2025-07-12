@@ -1,0 +1,141 @@
+<Page x:Class="MemoAI.Pages.InboxPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="InboxPage"
+      Background="{StaticResource BackgroundColor}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource SurfaceColor}"
+               BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1"
+               Padding="32,24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="📥" FontSize="24" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Bandeja de Entrada" FontSize="24" FontWeight="SemiBold"
+                              Foreground="{StaticResource TextPrimary}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Gestiona tus correos electrónicos" FontSize="14"
+                              Foreground="{StaticResource TextSecondary}"
+                              VerticalAlignment="Center" Margin="24,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Border Background="{StaticResource PrimaryBlue}" CornerRadius="8"
+                           Padding="16,8" Margin="0,0,12,0" Cursor="Hand">
+                        <TextBlock Text="+ Redactar" FontSize="14" FontWeight="Medium"
+                                  Foreground="White"/>
+                    </Border>
+                    <Border x:Name="RefreshButton" Background="Transparent" BorderBrush="{StaticResource BorderColor}"
+                           BorderThickness="1" CornerRadius="8" Padding="16,8" Cursor="Hand"
+                           MouseLeftButtonDown="RefreshButton_Click">
+                        <TextBlock Text="🔄 Actualizar" FontSize="14" FontWeight="Medium"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar izquierdo - Filtros -->
+            <Border Grid.Column="0" Background="{StaticResource SidebarColor}"
+                   BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,1,0">
+                <StackPanel Margin="24,32,24,24">
+                    <TextBlock Text="FILTROS" FontSize="12" FontWeight="Medium"
+                              Foreground="{StaticResource TextTertiary}" Margin="0,0,0,16"/>
+
+                    <!-- Filtros de correo -->
+                    <Border x:Name="InboxFilter" Background="{StaticResource PrimaryBlue}" CornerRadius="12"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand"
+                           MouseLeftButtonDown="InboxFilter_Click">
+                        <StackPanel>
+                            <TextBlock Text="📥 Recibidos" FontSize="14" FontWeight="Medium"
+                                      Foreground="White"/>
+                            <TextBlock x:Name="InboxCountText" Text="24 nuevos" FontSize="12"
+                                      Foreground="White" Opacity="0.8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border x:Name="SentFilter" Background="{StaticResource SurfaceColor}" CornerRadius="12"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand"
+                           MouseLeftButtonDown="SentFilter_Click">
+                        <StackPanel>
+                            <TextBlock Text="📤 Enviados" FontSize="14" FontWeight="Medium"
+                                      Foreground="{StaticResource TextPrimary}"/>
+                            <TextBlock x:Name="SentCountText" Text="12 correos" FontSize="12"
+                                      Foreground="{StaticResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="{StaticResource SurfaceColor}" CornerRadius="12"
+                           Padding="16,12" Margin="0,0,0,8" Cursor="Hand">
+                        <StackPanel>
+                            <TextBlock Text="⭐ Importantes" FontSize="14" FontWeight="Medium"
+                                      Foreground="{StaticResource TextPrimary}"/>
+                            <TextBlock Text="8 correos" FontSize="12"
+                                      Foreground="{StaticResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+
+
+                    <Border Background="{StaticResource SurfaceColor}" CornerRadius="12"
+                           Padding="16,12" Margin="0,0,0,32" Cursor="Hand">
+                        <StackPanel>
+                            <TextBlock Text="🗑️ Papelera" FontSize="14" FontWeight="Medium"
+                                      Foreground="{StaticResource TextPrimary}"/>
+                            <TextBlock Text="3 correos" FontSize="12"
+                                      Foreground="{StaticResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Etiquetas -->
+                    <TextBlock Text="ETIQUETAS" FontSize="12" FontWeight="Medium"
+                              Foreground="{StaticResource TextTertiary}" Margin="0,0,0,16"/>
+
+                    <Border Background="{StaticResource SurfaceColor}" CornerRadius="8"
+                           Padding="12,8" Margin="0,0,0,6" Cursor="Hand">
+                        <TextBlock Text="🔴 Urgente" FontSize="12"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+
+                    <Border Background="{StaticResource SurfaceColor}" CornerRadius="8"
+                           Padding="12,8" Margin="0,0,0,6" Cursor="Hand">
+                        <TextBlock Text="💼 Trabajo" FontSize="12"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+
+                    <Border Background="{StaticResource SurfaceColor}" CornerRadius="8"
+                           Padding="12,8" Margin="0,0,0,6" Cursor="Hand">
+                        <TextBlock Text="👥 Personal" FontSize="12"
+                                  Foreground="{StaticResource TextPrimary}"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Panel central - Lista de correos -->
+            <Border Grid.Column="1" Background="{StaticResource SurfaceColor}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,32,32,16">
+                    <StackPanel x:Name="EmailListPanel">
+                        <!-- Los correos se cargarán dinámicamente aquí -->
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>
